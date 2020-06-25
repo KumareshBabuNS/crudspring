@@ -1,0 +1,31 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+resources:
+- repo: self
+
+variables:
+  imageName: $(appName)
+  dockerhubNS: 'webappcontainerregis1' 
+
+steps:
+- task: Docker@2
+  displayName: Login to Azure Container Registry
+  inputs:
+    command: login
+    containerRegistry: acrserviceconn1
+- task: Docker@2
+  displayName: Build and Push an image
+  inputs:
+    command: buildAndPush
+    dockerfile: Dockerfile
+    containerRegistry: acrserviceconn1
+    repository: $(dockerhubNS)/$(imageName)-$(appEnv)
+    tags: '$(appBuildNumber)'

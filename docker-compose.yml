@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  database:
+    image: ghusta/postgres-world-db:latest
+    ports:
+      - 5432:5432
+
+  web:
+    image: webappcontainerregis1.azurecr.io/crudspring_web:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
