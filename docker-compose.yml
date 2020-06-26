@@ -8,6 +8,6 @@ services:
   web:
     image: webappcontainerregis1.azurecr.io/crudspring_web:latest
     ports:
-      - 8500:8500
+      - 8500:8080
     depends_on:
       - database
